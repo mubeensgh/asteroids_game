@@ -4,6 +4,7 @@ import random
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+import sys
 
 def main():
     pygame.init()
@@ -25,6 +26,10 @@ def main():
                 return
         screen.fill("black")
         updatable.update(dt)
+        for i_asteroid in asteroids:
+            if i_asteroid.collided(player):
+                print("Game over!")
+                sys.exit("Bye")
         for d in drawable:
             d.draw(screen)
         pygame.display.flip()
