@@ -1,5 +1,5 @@
 import pygame
-from circleshape import CircleShape
+from circleshape import *
 from constants import *
 
 
@@ -7,6 +7,7 @@ class Player(CircleShape):
     def __init__(self, x, y,):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
+        self.shots = pygame.sprite.Group()
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -37,3 +38,12 @@ class Player(CircleShape):
             self.move(dt)
         if keys[pygame.K_s]:
             self.move(-dt)
+        if keys[pygame.K_SPACE]:
+            self.shoot(dt)
+
+    def shoot(self,dt):
+        bullet = Shot(self.position.x, self.position.y, SHOT_RADIUS)
+        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        bullet.velocity = forward * PLAYER_SHOOT_SPEED
+        bullet.position += bullet.velocity * dt # Multiply the velocity vector by dt
+        self.shots.add(bullet)

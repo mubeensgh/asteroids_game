@@ -1,4 +1,5 @@
 import pygame
+from constants import *
 
 class CircleShape(pygame.sprite.Sprite):
     def __init__(self, x, y, radius):
@@ -23,3 +24,13 @@ class CircleShape(pygame.sprite.Sprite):
             return True
         else:
             return False
+
+class Shot(CircleShape):
+        def __init__(self, x, y, radius):
+            super().__init__(x, y, radius) # Call the parent's __init__ with x, y, and radius
+            self.velocity = pygame.Vector2(0, 0)
+        def draw(self, screen):
+            white = (255,255,255)
+            pygame.draw.circle(screen, white ,self.position, self.radius ,2) # Use self.radius here
+        def update(self,dt):
+            self.position += self.velocity * dt
