@@ -33,12 +33,17 @@ def main():
             if i_asteroid.collided(player):
                 print("Game over!")
                 sys.exit("Bye")
-        for shot in player.shots: # Update the player's shots
+        for shot in player.shots:
             shot.update(dt)
         for d in drawable:
             d.draw(screen)
-        for shot in player.shots: # Draw the player's shots
+        for shot in player.shots:
             shot.draw(screen)
+        for k_asteroid in asteroids:
+            for i_shot in shots:
+                if k_asteroid.collided(i_shot):
+                    k_asteroid.split()
+                    i_shot.kill()
         pygame.display.flip()
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
